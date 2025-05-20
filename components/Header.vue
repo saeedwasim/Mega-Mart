@@ -10,12 +10,13 @@
         </div>
         <div class="h-[48px] w-[507px] bg-[#F3F9FB] flex justify-between items-center rounded-lg px-5">
             <div>
-                <Dropdown/>
+                <Dropdown />
             </div>
             <div>
-                <input type="text" class="w-[360px] outline-none bg-[#F3F9FB]" placeholder="Search here...">
+                <input type="text" class="w-[360px] outline-none bg-[#F3F9FB]" placeholder="Search here..."
+                    v-model="searchCategories" @keyup.enter="searchCategory()">
             </div>
-            <div >
+            <div>
                 <img src="@/assets/svg/Search.svg" alt="" class="cursor-pointer">
             </div>
         </div>
@@ -33,3 +34,12 @@
         </div>
     </div>
 </template>
+<script setup>
+const searchCategories = ref("")
+const emit = defineEmits(['filterData'])
+const searchCategory = () => {
+    console.log(searchCategories.value, "searchCategories");
+    emit('filterData', searchCategories.value)
+    searchCategories.value = ''
+}
+</script>
