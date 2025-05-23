@@ -17,25 +17,27 @@
 <script setup>
 import { showCard } from "~/store/cards"
 const card = showCard()
+const orignalCardData = ref([])
 const handleCardData = ref([])
 const getFilteredData = ref("")
 const fetchData = async () => {
-  handleCardData.value = card.getCardsData
   await card.fetchCardsData()
+  orignalCardData.value = card.getCardsData
+  handleCardData.value = orignalCardData.value
+
 }
 const handleFilter = (value) => {
   getFilteredData.value = value
-  console.log("getFilteredData.value", getFilteredData.value)
+
+  if (getFilteredData.value === "all") {
+    handleCardData.value = orignalCardData.value
+  } else {
+    handleCardData.value = orignalCardData.value.filter(
+      item => item.category.includes(getFilteredData.value)
+    )
+  }
 }
 
-watch(
-  () => card.getCardsData,
-  (newValue, oldValue) => {
-    handleCardData.value = newValue
-    console.log(newValue, "This is State Watch")
-  },
-  { deep: true }
-)
 onMounted(async () => {
   await fetchData()
 })

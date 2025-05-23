@@ -1,6 +1,7 @@
 <template>
   <div class="grid grid-cols-5">
-    <div v-for="item in cardsData" :key="item.id" class="mb-5 w-[227px] h-[284px] bg-[#f5f5f5] rounded-2xl relative">
+    <div v-for="item in cardsData" :key="item.id" class="mb-5 w-[227px] h-[284px] bg-[#f5f5f5] rounded-2xl relative cursor-pointer"
+     @click="openDetailsPage(item.id)">
       <div
         class="w-[51px] h-[53px] bg-[#008ECC] rounded-tr-2xl rounded-bl-2xl absolute top-0 right-0 flex justify-center items-center">
         <div class="text-[14px] font-light text-white text-center">
@@ -34,6 +35,7 @@
 </template>
 <script setup>
 const showToolTipId = ref(null)
+const router = useRouter();
 const props = defineProps({
   cardsData: Array
 })
@@ -42,6 +44,9 @@ const openTooltip = (id) => {
 }
 const closeToolip = () => {
    showToolTipId.value = null
-
 }
+const openDetailsPage = (id) => {
+  console.log(id)
+  router.push(`/cards/${id}`);
+};
 </script>
